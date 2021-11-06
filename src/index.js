@@ -1,19 +1,17 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 import "./index.css";
 import App from "./App";
-import store from "./redux/store";
-import { myAction } from "./redux/actions";
+import { myAction } from "./redux/actions/actions";
 import reportWebVitals from "./reportWebVitals";
-
-console.log(store);
-console.log(store.getState());
-
-console.log(store.dispatch(myAction));
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addContact } from "../../redux/actions/actions";
 import { v4 as uuid } from "uuid";
 import s from "./Form.module.css";
 
 export default function Form({ onSubmit }) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleInputChange = (event) => {
     const { name, value } = event.currentTarget;
@@ -29,7 +33,8 @@ export default function Form({ onSubmit }) {
       number,
     };
 
-    onSubmit(addedNewContact);
+    // onSubmit(addedNewContact);
+    dispatch(addContact(addedNewContact));
 
     reset();
   };

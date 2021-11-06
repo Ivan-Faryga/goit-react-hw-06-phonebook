@@ -42,14 +42,6 @@ export default function App() {
     setContacts([...contacts, newObject]);
   };
 
-  const handleInputFilter = () => {
-    const filterToLowerCase = filter.toLocaleLowerCase().trim();
-
-    return contacts.filter((contact) =>
-      contact.name.toLocaleLowerCase().trim().includes(filterToLowerCase)
-    );
-  };
-
   const handleInputChange = (evt) => {
     setFilter(evt.currentTarget.value);
   };
@@ -62,13 +54,13 @@ export default function App() {
     <div className="App">
       <div className="InputWrapper">
         <h1 className="inputTitle">Phonebook</h1>
-        <Form onSubmit={formSubmitHandler} />
+        <Form />
         <br />
-        <Filter value={filter} onChange={handleInputChange} />
+        <Filter />
       </div>
       <div className="contactsSection">
         <h2 className="contactsSectionTitle">Contacts</h2>
-        <ContactList contacts={handleInputFilter()} onDelete={deleteContact} />
+        <ContactList />
       </div>
     </div>
   );
