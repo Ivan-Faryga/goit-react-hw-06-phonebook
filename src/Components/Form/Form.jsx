@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/actions/actions";
+// import { addContact } from "../../redux/actions/actions";
+import { addContact } from "../../redux/slices/contacts";
 import { v4 as uuid } from "uuid";
 import s from "./Form.module.css";
 
-export default function Form({ onSubmit }) {
+export default function Form() {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
@@ -31,6 +32,7 @@ export default function Form({ onSubmit }) {
     const addedNewContact = {
       name,
       number,
+      id: uuid(),
     };
 
     // onSubmit(addedNewContact);

@@ -14,7 +14,7 @@ const initialState = [
 
 export default function App() {
   const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState("");
+  // const [filter, setFilter] = useState("");
 
   // забираем данные из локал-сторадж при маунте компонента
   useEffect(() => {
@@ -42,19 +42,19 @@ export default function App() {
     setContacts([...contacts, newObject]);
   };
 
-  const handleInputChange = (evt) => {
-    setFilter(evt.currentTarget.value);
-  };
+  // const handleInputChange = (evt) => {
+  //   setFilter(evt.currentTarget.value);
+  // };
 
-  const deleteContact = (contactId) => {
-    setContacts([...contacts.filter((contact) => contact.id !== contactId)]);
-  };
+  // const deleteContact = (contactId) => {
+  //   setContacts([...contacts.filter((contact) => contact.id !== contactId)]);
+  // };
 
   return (
     <div className="App">
       <div className="InputWrapper">
         <h1 className="inputTitle">Phonebook</h1>
-        <Form />
+        <Form onSubmit={formSubmitHandler} />
         <br />
         <Filter />
       </div>

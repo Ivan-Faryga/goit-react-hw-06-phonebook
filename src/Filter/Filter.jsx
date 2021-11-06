@@ -1,21 +1,12 @@
 import React from "react";
 import s from "./Filter.module.css";
-import PropTypes from "prop-types";
-import { filterContact } from "../redux/actions/actions";
+// import { filterContact } from "../redux/actions/actions";
+import { filterContact } from "../redux/slices/filter";
 import { useDispatch, useSelector } from "react-redux";
 
 const Filter = () => {
   const dispatch = useDispatch();
   const value = useSelector((state) => state.filter);
-  const contacts = useSelector((state) => state.contacts);
-
-  const handleInputFilter = (contacts, filter) => {
-    const filterToLowerCase = filter.toLocaleLowerCase().trim();
-
-    return contacts.filter((contact) =>
-      contact.name.toLocaleLowerCase().trim().includes(filterToLowerCase)
-    );
-  };
 
   return (
     <>
@@ -31,11 +22,6 @@ const Filter = () => {
       />
     </>
   );
-};
-
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
 export default Filter;
