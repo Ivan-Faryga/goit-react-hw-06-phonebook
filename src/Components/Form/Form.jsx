@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { addContact } from "../../redux/actions/actions";
 import { addContact } from "../../redux/slices/contacts";
 import { v4 as uuid } from "uuid";
@@ -10,6 +10,7 @@ export default function Form() {
   const [number, setNumber] = useState("");
 
   const dispatch = useDispatch();
+  const contacts = useSelector((state) => state.contacts);
 
   const handleInputChange = (event) => {
     const { name, value } = event.currentTarget;
@@ -34,6 +35,11 @@ export default function Form() {
       number,
       id: uuid(),
     };
+
+    if (contacts.map((contact) => contact.name).includes(name.trim()))
+      return alert(`"${name.trim()}" is already in contacts`);
+    if (contacts.map((contact) => contact.number).includes(number.trim()))
+      return alert(`phone number "${number.trim()}" is already in contacts`);
 
     // onSubmit(addedNewContact);
     dispatch(addContact(addedNewContact));
