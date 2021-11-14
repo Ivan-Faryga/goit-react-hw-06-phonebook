@@ -1,65 +1,19 @@
-// вариант 1 ====== ванильный redux
-//import { createStore } from "redux";  ========= vanilla Redux
-//import { devToolsEnhancer } from "redux-devtools-extension"; ========= vanilla Redux
-// import { rootReducer } from "./reducers";
-import {
-  configureStore,
-  getDefaultMiddleware,
-  combineReducers,
-} from "@reduxjs/toolkit";
-// import logger from "redux-logger";
-import storage from "redux-persist/lib/storage";
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import contacts from "../redux/slices/contacts";
 import filter from "../redux/slices/filter";
+import { contactsApi } from "./contacts/contactsSlise";
 
-// ==========1============  создание стора на ванильном REDUX
-// const store = createStore(rootReducer, devToolsEnhancer());
-//==========================================================
+// const middleware = [...getDefaultMiddleware()];
 
-//==============3======================= рабочий код для SLICE
-// const rootReducer = {
-//   contacts,
-//   filter,
-// };
-// const store = configureStore({ reducer: rootReducer, devTools: true });
-//===================================================================
-
-// ==2== создание стора на REDUX TOOLKIT
-const persistConfig = {
-  key: "contacts",
-  storage,
-};
-
-// const middleware = [...getDefaultMiddleware(), logger];
-
-const rootReducer = combineReducers({
-  contacts,
-  filter,
-});
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-const store = configureStore({
-  reducer: persistedReducer,
-  middleware: getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }),
+export const store = configureStore({
+  reducer: {
+    contacts,
+    filter,
+    [contactsApi.reducerPath]: contactsApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => [
+    ...getDefaultMiddleware(),
+    contactsApi.middleware,
+  ],
   devTools: true,
 });
-const persistor = persistStore(store);
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
-// const store = configureStore({ reducer: persistedReducer, devTools: true });
-
-const storeObj = { store, persistor };
-
-export default storeObj;

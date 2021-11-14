@@ -1,16 +1,16 @@
-import { useState } from "react";
-import {
-  useCreateContactMutation,
-  useGetAllContactsQuery,
-} from "../../redux/contacts/contactsSlise";
+import { useCreateContactMutation } from "../../redux/contacts/contactsSlise";
+// import { addContact } from "../../redux/actions/actions";
+import { addContact } from "../../redux/slices/contacts";
 import { v4 as uuid } from "uuid";
 import s from "./Form.module.css";
 
 export default function Form() {
   const [createContact] = useCreateContactMutation();
-  const { data: contacts } = useGetAllContactsQuery();
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+
+  const dispatch = useDispatch();
+  const contacts = useSelector((state) => state.contacts);
 
   const handleInputChange = (event) => {
     const { name, value } = event.currentTarget;
@@ -41,8 +41,7 @@ export default function Form() {
       return alert(`phone number "${number.trim()}" is already in contacts`);
 
     // onSubmit(addedNewContact);
-    // dispatch(addContact(addedNewContact));
-    createContact(addedNewContact);
+    dispatch(addContact(addedNewContact));
 
     reset();
   };
